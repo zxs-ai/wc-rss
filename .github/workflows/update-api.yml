@@ -11,11 +11,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Update JSON
+      # ▼ 这里是关键位置 ▼
+      - name: Generate dynamic JSON with date
         run: |
-          # 动态生成视频链接（日期作为文件名示例）
           TODAY=$(date +"%Y-%m-%d")
-          echo '{"video_url": "https://raw.githubusercontent.com/zxs-ai/zxs-ai/main/videos/daily-video-${TODAY}.mp4"}' > api/daily-video.json
+          mkdir -p api  # 确保目录存在
+          echo "{\"video_url\": \"https://raw.githubusercontent.com/zxs-ai/zxs-ai/main/videos/daily-video-${TODAY}.mp4\"}" > api/daily-video.json
 
       - name: Commit changes
         run: |
